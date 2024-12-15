@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank App - Income & Expense Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+        }
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #ff4f4f;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+        .balance {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bank App UI</h1>
+    </header>
+    <div class="container">
+        <h2>Track Your Income & Expenses</h2>
+        <input type="text" id="description" placeholder="Enter description" />
+        <input type="number" id="amount" placeholder="Enter amount (+ for income, - for expense)" />
+        <button onclick="addTransaction()">Add Transaction</button>
+        <h3>Transaction History</h3>
+        <ul id="transaction-list"></ul>
+        <div class="balance">Balance: $<span id="balance">0</span></div>
+    </div>
+
+    <script>
+        let balance = 0;
+        const balanceElement = document.getElementById("balance");
+        const transactionList = document.getElementById("transaction-list");
+
+        function addTransaction() {
+            const description = document.getElementById("description").value;
+            const amount = parseFloat(document.getElementById("amount").value);
+
+            if (!description || isNaN(amount)) {
+                alert("Please enter a valid description and amount!");
+                return;
+            }
+
+            // Update balance
+            balance += amount;
+            balanceElement.textContent = balance.toFixed(2);
+
+            // Add transaction to the list
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <span>${description} (${amount > 0 ? 'Income' : 'Expense'})</span>
+                <span>$${amount.toFixed(2)}</span>
+            `;
+            transactionList.appendChild(li);
+
+            // Clear input fields
+            document.getElementById("description").value = "";
+            document.getElementById("amount").value = "";
+        }
+    </script>
+</body>
+</html>
